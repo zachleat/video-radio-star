@@ -1,6 +1,6 @@
 {
   "name": "@zachleat/video-radio-star",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Video helper web component. Intended for use with `muted` by default HTML5 videos.",
   "main": "video-radio-star.js",
   "publishConfig": {
