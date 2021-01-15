@@ -1,5 +1,5 @@
 {
-  "name": "video-radio-star",
+  "name": "@zachleat/video-radio-star",
   "version": "1.0.0",
   "description": "Video helper web component. Intended for use with `muted` by default HTML5 videos.",
   "main": "video-radio-star.js",
