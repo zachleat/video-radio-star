@@ -9,6 +9,7 @@ class VideoRadioStar extends HTMLElement {
       playing: "radiostar-playing",
       paused: "radiostar-paused",
       ended: "radiostar-ended",
+      controls: "radiostar-controls",
     };
 
     this.reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -73,6 +74,7 @@ class VideoRadioStar extends HTMLElement {
       this.classList.toggle(this.classes.paused, this.video.paused);
       this.classList.toggle(this.classes.playing, !this.video.paused);
       this.classList.toggle(this.classes.ended, this.video.ended);
+      this.classList.toggle(this.classes.controls, this.video.hasAttribute("controls"));
     }
   }
 
@@ -100,6 +102,14 @@ class VideoRadioStar extends HTMLElement {
       } else if(event.target.closest("[data-pause]")) {
         event.stopPropagation();
         this.video.pause();
+      } else if(event.target.closest("[data-controls]")) {
+        event.stopPropagation();
+        if(this.video.hasAttribute("controls")) {
+          this.video.removeAttribute("controls");
+        } else {
+          this.video.setAttribute("controls", "");
+        }
+        this.setClasses();
       }
     });
   }
