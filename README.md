@@ -20,7 +20,9 @@ npm install @zachleat/video-radio-star
 </radio-star>
 <script type="module">
 import {VideoRadioStar} from "./video-radio-star.js";
-customElements.define("radio-star", VideoRadioStar);
+if("customElements" in window) {
+  customElements.define("radio-star", VideoRadioStar);
+}
 </script>
 ```
 
