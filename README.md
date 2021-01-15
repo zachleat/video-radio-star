@@ -21,17 +21,6 @@ npm install @zachleat/video-radio-star
 <script type="module" src="video-radio-star.js"></script>
 ```
 
-### Or, you can define your own element name
-
-```html
-<script type="module">
-import {VideoRadioStar} from "./video-radio-star.js";
-if("customElements" in window) {
-  customElements.define("radio-star", VideoRadioStar);
-}
-</script>
-```
-
 ## Features
 
 * Add classes for styling for:
