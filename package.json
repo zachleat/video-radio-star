@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Video helper web component. Intended for use with `muted` by default HTML5 videos.",
   "main": "video-radio-star.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
