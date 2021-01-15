@@ -56,10 +56,10 @@ class VideoRadioStar extends HTMLElement {
       return false;
     }
 
-    let mq = this.getAttribute(this.attr.visibleAutoplay);
-    if(mq === undefined) {
+    if(this.hasAttribute(this.attr.visibleAutoplay)) {
       return true;
     }
+    let mq = this.getAttribute(this.attr.visibleAutoplay);
     if(mq) {
       return window.matchMedia(mq).matches;
     }
