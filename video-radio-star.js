@@ -105,10 +105,9 @@ class VideoRadioStar extends HTMLElement {
   }
 }
 
-// Do this part yourself
-// if("customElements" in window) {
-//   window.customElements.define("video-radio-star", RadioStar);
-// }
+if("customElements" in window) {
+  window.customElements.define("video-radio-star", VideoRadioStar);
+}
 
 export {
   VideoRadioStar
