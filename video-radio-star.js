@@ -70,7 +70,7 @@ class VideoRadioStar extends HTMLElement {
   setClasses() {
     if(this.video) {
       this.classList.add(this.classes.init);
-      this.classList.toggle(this.classes.muted, this.video.muted);
+      this.classList.toggle(this.classes.muted, this.video.muted || this.video.volume === 0);
       this.classList.toggle(this.classes.paused, this.video.paused);
       this.classList.toggle(this.classes.playing, !this.video.paused);
       this.classList.toggle(this.classes.ended, this.video.ended);
@@ -90,6 +90,7 @@ class VideoRadioStar extends HTMLElement {
     this.video.addEventListener("play", update);
     this.video.addEventListener("pause", update);
     this.video.addEventListener("ended", update);
+    this.video.addEventListener("volumechange", update);
 
     this.addEventListener("click", (event) => {
       if(event.target.closest("[data-mute]")) {
