@@ -2,6 +2,7 @@ class VideoRadioStar extends HTMLElement {
   connectedCallback() {
     this.attr = {
       visibleAutoplay: "data-visible-autoplay",
+      cueTarget: "data-captions-content",
     };
     this.classes = {
       init: "radiostar-enhanced",
@@ -17,6 +18,14 @@ class VideoRadioStar extends HTMLElement {
     this.reduceData = "connection" in navigator && navigator.connection.saveData === true;
 
     this.video = this.querySelector(":scope video");
+
+    let cues = Array.from(this.querySelectorAll(`:scope [${this.attr.cueTarget}]`));
+    this.cueTargets = {};
+    for(let target of cues) {
+      let lang = target.getAttribute(this.attr.cueTarget);
+      this.cueTargets[lang] = target;
+    }
+
     this.setClasses();
     this.bindEvents();
 
@@ -69,14 +78,14 @@ class VideoRadioStar extends HTMLElement {
   }
 
   hasCaptionEnabled() {
-    for(let caption of this.video.textTracks) {
-      if(caption.mode === "showing") {
+    for(let track of this.video.textTracks) {
+      if(track.mode === "showing") {
         return true;
       }
     }
     return false;
   }
-
+  
   setClasses() {
     if(this.video) {
       this.classList.add(this.classes.init);
@@ -102,6 +111,7 @@ class VideoRadioStar extends HTMLElement {
     this.video.addEventListener("pause", update);
     this.video.addEventListener("ended", update);
     this.video.addEventListener("volumechange", update);
+    this.bindCues();
 
     this.addEventListener("click", (event) => {
       if(event.target.closest("[data-mute]")) {
@@ -127,17 +137,43 @@ class VideoRadioStar extends HTMLElement {
         let btn = event.target.closest("[data-captions]");
         let langTarget = btn.getAttribute("data-captions");
         let enabled = this.hasCaptionEnabled();
-        for(let caption of this.video.textTracks) {
+
+        for(let track of this.video.textTracks) {
           if(enabled) {
-            caption.mode = "hidden";
-          } else if(!langTarget || langTarget === caption.language) {
-            caption.mode = "showing";
+            track.mode = "hidden";
+          } else if(!langTarget || langTarget === track.language) {
+            track.mode = "showing";
             break;
           }
         }
+
         this.setClasses();
       }
     });
+  }
+
+  _setCueText(text, language) {
+    if(this.cueTargets[language]) {
+      this.cueTargets[language].innerText = text;
+    }
+  }
+
+  _setTrackCueText(track) {
+    if(track.activeCues.length > 0) {
+      this._setCueText(track.activeCues[0].text, track.language);
+    } else {
+      this._setCueText("", track.language);
+    }
+  }
+
+  bindCues() {
+    if(Object.keys(this.cueTargets).length) {
+      for(let track of this.video.textTracks) {
+        track.addEventListener("cuechange", event => {
+          this._setTrackCueText(event.target);
+        });
+      }
+    }
   }
 }
 
