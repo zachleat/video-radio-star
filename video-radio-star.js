@@ -19,12 +19,6 @@ class VideoRadioStar extends HTMLElement {
 
     this.video = this.querySelector(":scope video");
 
-    this.cueTargets = {};
-    for(let target of this.querySelectorAll(`:scope [${this.attr.cueTarget}]`)) {
-      let lang = target.getAttribute(this.attr.cueTarget);
-      this.cueTargets[lang] = target;
-    }
-
     this.setClasses();
     this.bindEvents();
 
@@ -110,7 +104,10 @@ class VideoRadioStar extends HTMLElement {
     this.video.addEventListener("pause", update);
     this.video.addEventListener("ended", update);
     this.video.addEventListener("volumechange", update);
-    this.bindCues();
+
+    this._initCaptionsTargets();
+    this._fixCaptionsBug();
+    this.bindCaptions();
 
     this.addEventListener("click", (event) => {
       if(event.target.closest("[data-mute]")) {
@@ -151,6 +148,27 @@ class VideoRadioStar extends HTMLElement {
     });
   }
 
+  _initCaptionsTargets() {
+    this.cueTargets = {};
+    for(let target of this.querySelectorAll(`:scope [${this.attr.cueTarget}]`)) {
+      let lang = target.getAttribute(this.attr.cueTarget);
+      this.cueTargets[lang] = target;
+    }
+  }
+
+  _fixCaptionsBug() {
+    // Without a <track default>, cuechange events won’t fire.
+    // This is a workaround for that bug.
+    // Allows captions to be disabled but still have cuechange events.
+    for(let track of this.video.textTracks) {
+      if(this.cueTargets[track.language]) {
+        track.mode = "showing";
+        track.mode = "hidden";
+        break;
+      }
+    }
+  }
+
   _setCueText(text, language) {
     if(this.cueTargets[language]) {
       this.cueTargets[language].innerText = text;
@@ -165,12 +183,12 @@ class VideoRadioStar extends HTMLElement {
     }
   }
 
-  bindCues() {
+  // Warning: Firefox, Chrome, and Safari unbind `cuechange` events when
+  // the user disables captions in <video controls>
+  // When using the `[data-captions]` button it works fine.
+  bindCaptions() {
     if(Object.keys(this.cueTargets).length) {
-      // Bug: when users disable captions in the UI it stops sending these
-      // Tested in Firefox, Chrome, and Safari.
-      // When using the `[data-captions]` button it works fine.
-      this.video.addEventListener("cuechange", event => {
+      this.video.addEventListener("cuechange", (event) => {
         this._setTrackCueText(event.target.track);
       }, true);
     }
