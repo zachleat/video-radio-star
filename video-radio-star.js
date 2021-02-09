@@ -114,13 +114,16 @@ class VideoRadioStar extends HTMLElement {
         event.stopPropagation();
         this.video.muted = !this.video.muted;
         this.setClasses();
-      } else if(event.target.closest("[data-play]")) {
+      }
+      if(event.target.closest("[data-play]")) {
         event.stopPropagation();
         this.video.play();
-      } else if(event.target.closest("[data-pause]")) {
+      }
+      if(event.target.closest("[data-pause]")) {
         event.stopPropagation();
         this.video.pause();
-      } else if(event.target.closest("[data-controls]")) {
+      }
+      if(event.target.closest("[data-controls]")) {
         event.stopPropagation();
         if(this.video.hasAttribute("controls")) {
           this.video.removeAttribute("controls");
@@ -128,7 +131,8 @@ class VideoRadioStar extends HTMLElement {
           this.video.setAttribute("controls", "");
         }
         this.setClasses();
-      } else if(event.target.closest("[data-captions]")) {
+      }
+      if(event.target.closest("[data-captions]")) {
         event.stopPropagation();
         let btn = event.target.closest("[data-captions]");
         let langTarget = btn.getAttribute("data-captions");
