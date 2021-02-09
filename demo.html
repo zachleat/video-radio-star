@@ -72,7 +72,10 @@
 		<p>Go back to the <a href="https://github.com/zachleat/video-radio-star/">repository on GitHub</a>.</p>
 		<video-radio-star class="demo-video" data-visible-autoplay>
 			<div class="demo-video-fluid">
-				<video src="./media/flower.mp4" muted loop controlsList="nodownload" playsinline disablePictureInPicture disableRemotePlayback></video>
+				<video src="./media/flower.mp4" muted loop controlsList="nodownload" playsinline disablePictureInPicture disableRemotePlayback>
+					<track label="English" kind="captions" srclang="en" src="media/flower-en.vtt" default />
+					<track label="Español" kind="captions" srclang="es" src="media/flower-es.vtt" />
+				</video>
 
 				<!--<button type="button" data-controls class="demo-btn demo-controls" aria-label="Toggle Mute">
 					<svg width="18" height="18" viewBox="340 140 280 279.416" aria-hidden="true" focusable="false">
@@ -90,6 +93,9 @@
 				<button type="button" data-pause>Pause</button>
 				<button type="button" data-mute>Toggle Mute</button>
 				<button type="button" data-controls>Toggle Controls</button>
+				<button type="button" data-captions>Toggle Captions</button>
+				<button type="button" data-captions="en">Toggle Captions (English)</button>
+				<button type="button" data-captions="es">Toggle Captions (Spanish)</button>
 			</p>
 		</video-radio-star>
 		<script type="module" src="video-radio-star.js"></script>

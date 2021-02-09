@@ -10,6 +10,7 @@ class VideoRadioStar extends HTMLElement {
       paused: "radiostar-paused",
       ended: "radiostar-ended",
       controls: "radiostar-controls",
+      captions: "radiostar-captions",
     };
 
     this.reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -67,6 +68,15 @@ class VideoRadioStar extends HTMLElement {
     return false;
   }
 
+  hasCaptionEnabled() {
+    for(let caption of this.video.textTracks) {
+      if(caption.mode === "showing") {
+        return true;
+      }
+    }
+    return false;
+  }
+
   setClasses() {
     if(this.video) {
       this.classList.add(this.classes.init);
@@ -75,6 +85,7 @@ class VideoRadioStar extends HTMLElement {
       this.classList.toggle(this.classes.playing, !this.video.paused);
       this.classList.toggle(this.classes.ended, this.video.ended);
       this.classList.toggle(this.classes.controls, this.video.hasAttribute("controls"));
+      this.classList.toggle(this.classes.captions, this.hasCaptionEnabled());
     }
   }
 
@@ -109,6 +120,20 @@ class VideoRadioStar extends HTMLElement {
           this.video.removeAttribute("controls");
         } else {
           this.video.setAttribute("controls", "");
+        }
+        this.setClasses();
+      } else if(event.target.closest("[data-captions]")) {
+        event.stopPropagation();
+        let btn = event.target.closest("[data-captions]");
+        let langTarget = btn.getAttribute("data-captions");
+        let enabled = this.hasCaptionEnabled();
+        for(let caption of this.video.textTracks) {
+          if(enabled) {
+            caption.mode = "hidden";
+          } else if(!langTarget || langTarget === caption.language) {
+            caption.mode = "showing";
+            break;
+          }
         }
         this.setClasses();
       }
