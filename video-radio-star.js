@@ -19,9 +19,8 @@ class VideoRadioStar extends HTMLElement {
 
     this.video = this.querySelector(":scope video");
 
-    let cues = Array.from(this.querySelectorAll(`:scope [${this.attr.cueTarget}]`));
     this.cueTargets = {};
-    for(let target of cues) {
+    for(let target of this.querySelectorAll(`:scope [${this.attr.cueTarget}]`)) {
       let lang = target.getAttribute(this.attr.cueTarget);
       this.cueTargets[lang] = target;
     }
@@ -136,14 +135,14 @@ class VideoRadioStar extends HTMLElement {
         event.stopPropagation();
         let btn = event.target.closest("[data-captions]");
         let langTarget = btn.getAttribute("data-captions");
-        let enabled = this.hasCaptionEnabled();
+        let isCaptionEnabled = this.hasCaptionEnabled();
 
         for(let track of this.video.textTracks) {
-          if(enabled) {
+          if(isCaptionEnabled) {
             track.mode = "hidden";
           } else if(!langTarget || langTarget === track.language) {
             track.mode = "showing";
-            break;
+            break; // only enable one
           }
         }
 
@@ -168,11 +167,12 @@ class VideoRadioStar extends HTMLElement {
 
   bindCues() {
     if(Object.keys(this.cueTargets).length) {
-      for(let track of this.video.textTracks) {
-        track.addEventListener("cuechange", event => {
-          this._setTrackCueText(event.target);
-        });
-      }
+      // Bug: when users disable captions in the UI it stops sending these
+      // Tested in Firefox, Chrome, and Safari.
+      // When using the `[data-captions]` button it works fine.
+      this.video.addEventListener("cuechange", event => {
+        this._setTrackCueText(event.target.track);
+      }, true);
     }
   }
 }
