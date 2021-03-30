@@ -41,6 +41,7 @@ npm install @zachleat/video-radio-star
 * Sets `preload="none"` when [SaveData](https://caniuse.com/mdn-api_networkinformation_savedata) is true.
 * Disables `autoplay` when [`prefers-reduced-motion` is enabled](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
 * Use your own external mute/play/pause controls by adding `data-mute`, `data-play`, or `data-pause` respectively to one or more `<button>` elements.
+* iOS note: as of iOS version 14.4, even if you use `<track default>` iOS will not display captions by default unless it is enabled in Settings. Go to Settings -> Accessibility -> Subtitles & Captioning -> and make sure the Closed Captions + SDH option is selected.
 
 ## Credits
 
