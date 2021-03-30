@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<title>video-radio-star Web Component Demo</title>
+		<link rel="stylesheet" href="demo.css">
+	</head>
+	<body>
+		<h1><code>video-radio-star</code> Web Component Demo</h1>
+		<p>Go back to the <a href="https://github.com/zachleat/video-radio-star/">repository on GitHub</a>.</p>
+
+		<div style="height: 100vh; border: 1px dotted;">Space</div>
+		<h2>Simple</h2>
+		<video-radio-star class="demo-video" data-visible-autoplay>
+			<div class="demo-video-fluid">
+				<video src="./media/flower.mp4" preload="none" muted loop controlsList="nodownload" playsinline disablePictureInPicture disableRemotePlayback>
+					<track label="English" kind="captions" srclang="en" src="media/flower-en.vtt" default />
+					<track label="Español" kind="captions" srclang="es" src="media/flower-es.vtt" />
+				</video>
+
+				<button type="button" data-mute class="demo-btn demo-mute" aria-label="Toggle Mute">
+					<svg width="33" height="33" viewBox="0 0 33 33" aria-hidden="true" focusable="false">
+						<path d="M15.4766 11.1643C15.5859 11.0549 15.75 10.9729 15.9414 10.9729C16.1055 10.9729 16.2695 11.0549 16.4062 11.1643C16.5156 11.301 16.5977 11.4651 16.5977 11.6292V20.8167C16.5977 21.0081 16.5156 21.1721 16.4062 21.2815C16.2695 21.4182 16.1055 21.4729 15.9414 21.4729C15.75 21.4729 15.5859 21.4182 15.4766 21.2815L13.043 18.8479H10.2539C10.0625 18.8479 9.89844 18.7932 9.78906 18.6565C9.65234 18.5471 9.59766 18.3831 9.59766 18.1917V14.2542C9.59766 14.0901 9.65234 13.926 9.78906 13.7893C9.89844 13.6799 10.0625 13.5979 10.2539 13.5979H13.043L15.4766 11.1643ZM22.2305 16.2229L23.4609 17.4807C23.543 17.5627 23.5977 17.6721 23.5977 17.7815C23.5977 17.9182 23.543 18.0276 23.4609 18.0823L22.832 18.7112C22.75 18.8206 22.6406 18.8479 22.5312 18.8479C22.3945 18.8479 22.2852 18.8206 22.2305 18.7112L20.9727 17.4807L19.7148 18.7112C19.6328 18.8206 19.5234 18.8479 19.4141 18.8479C19.2773 18.8479 19.168 18.8206 19.1133 18.7112L18.4844 18.0823C18.375 18.0276 18.3477 17.9182 18.3477 17.7815C18.3477 17.6721 18.375 17.5627 18.4844 17.4807L19.7148 16.2229L18.4844 14.9651C18.375 14.9104 18.3477 14.801 18.3477 14.6643C18.3477 14.5549 18.375 14.4456 18.4844 14.3635L19.1133 13.7346C19.168 13.6526 19.2773 13.5979 19.4141 13.5979C19.5234 13.5979 19.6328 13.6526 19.7148 13.7346L20.9727 14.9651L22.2305 13.7346C22.2852 13.6526 22.3945 13.5979 22.5312 13.5979C22.6406 13.5979 22.75 13.6526 22.832 13.7346L23.4609 14.3635C23.543 14.4456 23.5977 14.5549 23.5977 14.6643C23.5977 14.801 23.543 14.9104 23.4609 14.9651L22.2305 16.2229Z"/>
+					</svg>
+				</button>
+			</div>
+		</video-radio-star>
+
+		<script type="module" src="video-radio-star.js"></script>
+	</body>
+</html>

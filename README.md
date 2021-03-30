@@ -3,6 +3,8 @@
 A lightweight web component helper for HTML5 videos. Intended for use with `muted` by default HTML5 videos.
 
 * [Demo](https://zachleat.github.io/video-radio-star/demo.html)
+* [Demo out of viewport using `preload="none"`](https://zachleat.github.io/video-radio-star/demo-preload-none.html)
+
 
 ## Installation
 
@@ -30,11 +32,12 @@ npm install @zachleat/video-radio-star
   * `radiostar-paused`
   * `radiostar-ended`
 
-* Only start playing when the video is visible in the viewport with `data-visible-autoplay` (via IntersectionObserver) Make sure you don’t use the `autoplay` attribute.
+* Only start playing when the video is visible in the viewport with `data-visible-autoplay` (via IntersectionObserver) Make sure you leave off the `autoplay` attribute in your markup.
   * Optionally conditional on media query, e.g. `data-visible-autoplay="(min-width: 48em)`
   * The `muted` attribute is required when using this feature.
   * Don’t use the `autoplay` attribute.
 * Automatically pause video when it scrolls out of view  (via IntersectionObserver)
+* Works as expected with `preload="none"`.
 * Sets `preload="none"` when [SaveData](https://caniuse.com/mdn-api_networkinformation_savedata) is true.
 * Disables `autoplay` when [`prefers-reduced-motion` is enabled](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
 * Use your own external mute/play/pause controls by adding `data-mute`, `data-play`, or `data-pause` respectively to one or more `<button>` elements.
